@@ -1,22 +1,47 @@
-package com.example.baituan2.service;
+package com.example.BaiTuan2.Service;
 
-import com.example.baituan2.model.Book;
+import com.example.BaiTuan2.Model.Book;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookService {
+    private List<Book> books = new ArrayList<>();
+    private int nextId = 1; // Biến để tự tăng ID
 
-    private final List<Book> books = new ArrayList<>();
-
+    // Constructor: Tạo dữ liệu giả lập
     public BookService() {
-        books.add(new Book(1, "Java Spring Boot", "Nguyen Thi A"));
-        books.add(new Book(2, "Lap trinh Java", "Tran Thai B"));
-        books.add(new Book(3, "Spring MVC", "Le Van C"));
+        books.add(new Book(nextId++, "Spring Boot Demo", "Nguyen Van A"));
+        books.add(new Book(nextId++, "Hoc Java Co Ban", "Tran Van B"));
     }
 
     public List<Book> getAllBooks() {
         return books;
+    }
+
+    public Book getBookById(int id) {
+        return books.stream()
+                .filter(book -> book.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void addBook(Book book) {
+        book.setId(nextId++); // Gán ID mới rồi tăng biến đếm lên
+        books.add(book);
+    }
+
+    public void updateBook(Book updatedBook) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == updatedBook.getId()) {
+                books.set(i, updatedBook);
+                break;
+            }
+        }
+    }
+
+    public void deleteBook(int id) {
+        books.removeIf(book -> book.getId() == id);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.baituan2.model;
+package com.example.BaiTuan2.Model;
 
 public class Book {
 
